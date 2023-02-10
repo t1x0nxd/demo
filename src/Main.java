@@ -1,47 +1,40 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void main(String[] input) {
-        String[] znak = {"+", "-", "/", "*"};
-        String[] znak1 = {"\\+", "-", "/", "\\*"};
+    public static void main(String[] args) {
         Scanner scn = new Scanner(System.in);
         System.out.print("Введите пример: ");
-        String exp = scn.nextLine();
-        int znakIndex = -1;
-        for (int i = 0; i < znak.length; i++) {
-            if (exp.contains(znak[i])) {
-                znakIndex = i;
-                break;
-            }
+        String input = scn.nextLine();
+        scn.close();
 
+
+        System.out.println(calc(input));
+    }
+    public static String calc(String input) {
+        String[] inputSplit = input.split(" ");
+        if (inputSplit.length !=3){
+            throw new IllegalArgumentException("Операция только с 2 числами");
         }
-        if (znakIndex == -1) {
-            System.out.println("Некорректное выражение");
-        }
-        int a, b;
-        String[] data = exp.split(znak1[znakIndex]);
-        a = Integer.parseInt(data[0]);
-        b = Integer.parseInt(data[1]);
+        int a = Integer.parseInt(inputSplit[0]);
+        int b = Integer.parseInt(inputSplit[2]);
+        String operation = inputSplit[1];
+
         if (1 <= a && a <= 10 && 1 <= b && b <= 10) {
 
-            int result;
-            switch (znak[znakIndex]) {
+            switch (operation) {
                 case "+":
-                    result = a + b;
-                    break;
+                    return String.valueOf((a + b));
                 case "-":
-                    result = a - b;
-                    break;
+                    return String.valueOf((a - b));
                 case "*":
-                    result = a * b;
-                    break;
+                    return String.valueOf((a * b));
+                case "/":
+                    return String.valueOf((a / b));
                 default:
-                    result = a / b;
-                    break;
+                    throw new IllegalArgumentException("Нет такой опреации ");
             }
-            System.out.println(result);
         } else {
-            System.out.println("Ошибка");
+            throw new IllegalArgumentException("На вход должны поступать числа от 1 до 10");
         }
-    }
+            }
 }
